@@ -1,0 +1,44 @@
+---
+title: "Relatório de dados"
+author: "Leo"
+format: html
+editor: visual
+---
+
+## Dados de dengue do SINAN
+
+Os dados individuais anonimizados com as notificações por suspeita de dengue no SINAN a partir do ano 2000 estão disponíveis de forma aberta na plataforma do Datasus. Os dados até o ano de 2022 teoricamente não sofrem mais atualizações enquanto os dados de 2023 e 2024 embora disponíveis têm atualizações frequentes. Os dados de 2000 a 2021 foram baixados do ftp do Datasus em 23 de julho de 2023. Os dados de 2022 foram baixados em 11 de março de 2024.
+
+https://datasus.saude.gov.br/transferencia-de-arquivos/
+
+## Selecionando o necessário
+
+O objetivo é gerar séries de casos suspeitos, prováveis, casos com sorotipo confirmado, casos grave e obitos por municipio, semana epidemiologica dos primeiros sintomas, faixa etária (IBGE), e sexo.
+
+De 2000 a 2006
+
+``` R
+select( 
+  ID_MN_RESI, DT_SIN_PRI, DT_NOTIFIC,
+  NU_IDADE, CS_SEXO,
+  CON_CLASSI, RESUL_VIRA, CON_EVOLUC, CON_DT_OBI
+)
+```
+
+A partir de 2007 as variáveis são:
+
+``` R
+select( 
+  ID_MN_RESI, DT_SIN_PRI, DT_NOTIFIC, DT_DIGITA,
+  NU_IDADE_N, CS_SEXO,
+  CLASSI_FIN, CRITERIO, SOROTIPO, EVOLUCAO, DT_OBITO
+)
+```
+
+Foram digitados 2.784.537 casos entre 2000 e 2006, 2.237.079 entre 2007 e 2009, e 18.337.935 entre 2010 e 2022. O que implica em um total de 23.359.551 casos digitados no SINAN com suspeita de dengue.
+
+## Filtros
+
+### Idade
+
+O campo idade do SINAN tem uma configuração espacial, com idade
